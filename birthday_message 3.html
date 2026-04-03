@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Ianne</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated gradient background with multiple layers */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #4facfe, #667eea);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            z-index: 0;
+            opacity: 0.9;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 107, 157, 0.3), transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(102, 126, 234, 0.3), transparent 50%);
+            animation: pulseGlow 8s ease infinite;
+            z-index: 0;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        /* Canvas for particle effects */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Floating hearts with advanced animations */
+        .heart {
+            position: absolute;
+            font-size: 28px;
+            opacity: 0;
+            animation: floatHeart 18s infinite cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 0 15px rgba(255, 107, 157, 0.8));
+            z-index: 2;
+            will-change: transform, opacity;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.3);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.9;
+            }
+            50% {
+                transform: translateY(50vh) translateX(50px) rotate(180deg) scale(1.2);
+                opacity: 0.9;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(-30px) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Sparkles */
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparkleAnim 3s infinite ease-in-out;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 1);
+            z-index: 3;
+        }
+
+        @keyframes sparkleAnim {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(2) rotate(180deg);
+            }
+        }
+
+        /* Notebook with 3D effects */
+        .notebook {
+            background: #fff;
+            width: 100%;
+            max-width: 750px;
+            min-height: 650px;
+            box-shadow: 
+                0 30px 80px rgba(0,0,0,0.4),
+                0 0 100px rgba(102, 126, 234, 0.3),
+                inset 0 0 60px rgba(102, 126, 234, 0.05);
+            border-radius: 8px;
+            position: relative;
+            padding: 70px 60px 60px 80px;
+            background-image: 
+                repeating-linear-gradient(
+                    transparent,
+                    transparent 31px,
+                    rgba(102, 126, 234, 0.08) 31px,
+                    rgba(102, 126, 234, 0.08) 32px
+                );
+            animation: fadeInNotebook 2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            z-index: 10;
+        }
+
+        .notebook:hover {
+            transform: translateY(-10px) rotateX(2deg);
+            box-shadow: 
+                0 40px 100px rgba(0,0,0,0.5),
+                0 0 150px rgba(102, 126, 234, 0.4),
+                inset 0 0 60px rgba(102, 126, 234, 0.08);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes fadeInNotebook {
+            0% {
+                opacity: 0;
+                transform: translateY(100px) rotateX(20deg) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0deg) scale(1);
+            }
+        }
+
+        .notebook::before {
+            content: '';
+            position: absolute;
+            left: 50px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #ff6b9d, #f093fb, #ff6b9d);
+            opacity: 0.5;
+            box-shadow: 0 0 15px rgba(255, 107, 157, 0.5);
+            animation: marginLinePulse 4s ease infinite;
+        }
+
+        @keyframes marginLinePulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.8; box-shadow: 0 0 25px rgba(255, 107, 157, 0.8); }
+        }
+
+        .notebook::after {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.2) 0%, 
+                transparent 50%, 
+                rgba(102, 126, 234, 0.1) 100%);
+            border-radius: 10px;
+            pointer-events: none;
+            z-index: -1;
+            filter: blur(10px);
+        }
+
+        /* Enhanced spiral binding */
+        .spiral {
+            position: absolute;
+            left: -25px;
+            top: 40px;
+            bottom: 40px;
+            width: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .spiral-ring {
+            width: 22px;
+            height: 22px;
+            border: 4px solid #555;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f5f5f5, #c0c0c0);
+            box-shadow: 
+                inset 0 3px 6px rgba(0,0,0,0.3),
+                0 3px 6px rgba(0,0,0,0.15),
+                0 0 10px rgba(102, 126, 234, 0.3);
+            animation: ringPulse 4s ease-in-out infinite;
+            animation-delay: calc(var(--ring-index) * 0.2s);
+        }
+
+        @keyframes ringPulse {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+                box-shadow: 
+                    inset 0 3px 6px rgba(0,0,0,0.3),
+                    0 3px 6px rgba(0,0,0,0.15),
+                    0 0 10px rgba(102, 126, 234, 0.3);
+            }
+            50% {
+                transform: scale(1.15) rotate(10deg);
+                box-shadow: 
+                    inset 0 3px 6px rgba(0,0,0,0.3),
+                    0 3px 6px rgba(0,0,0,0.15),
+                    0 0 20px rgba(102, 126, 234, 0.6);
+            }
+        }
+
+        /* Enhanced title with gradient text */
+        .title {
+            font-size: 38px;
+            margin-bottom: 40px;
+            font-weight: 800;
+            text-align: center;
+            animation: slideDownTitle 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% auto;
+            animation: slideDownTitle 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both,
+                       gradientText 3s ease infinite;
+            position: relative;
+            text-shadow: 0 5px 30px rgba(102, 126, 234, 0.4);
+            letter-spacing: 1px;
+        }
+
+        @keyframes slideDownTitle {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.8);
+                filter: blur(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes gradientText {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #764ba2, #f093fb, #764ba2, transparent);
+            border-radius: 2px;
+            box-shadow: 0 0 20px rgba(118, 75, 162, 0.6);
+            animation: lineGlow 2s ease infinite;
+        }
+
+        @keyframes lineGlow {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; box-shadow: 0 0 30px rgba(118, 75, 162, 0.9); }
+        }
+
+        /* Enhanced message area with custom scrollbar */
+        .message {
+            font-size: 17.5px;
+            line-height: 33px;
+            color: #2c3e50;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            word-wrap: break-word;
+            animation: fadeInText 2.5s ease-out 1s both;
+            position: relative;
+            max-height: 650px;
+            overflow-y: auto;
+            padding-right: 15px;
+        }
+
+        .message::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .message::-webkit-scrollbar-track {
+            background: linear-gradient(to bottom, #f1f1f1, #e0e0e0);
+            border-radius: 10px;
+            box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+        }
+
+        .message::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+        }
+
+        .message::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2, #f093fb, #667eea);
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.8);
+        }
+
+        @keyframes fadeInText {
+            0% {
+                opacity: 0;
+                filter: blur(8px);
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                filter: blur(0);
+                transform: translateY(0);
+            }
+        }
+
+        /* Enhanced music player with glassmorphism */
+        .music-player {
+            position: fixed;
+            bottom: 35px;
+            right: 35px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            padding: 28px;
+            border-radius: 25px;
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.3),
+                0 0 80px rgba(102, 126, 234, 0.3),
+                inset 0 0 40px rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            animation: slideUpPlayer 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) 2s both;
+            z-index: 1000;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .music-player:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 
+                0 30px 80px rgba(0,0,0,0.4),
+                0 0 120px rgba(102, 126, 234, 0.5),
+                inset 0 0 60px rgba(255, 255, 255, 0.15);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideUpPlayer {
+            0% {
+                opacity: 0;
+                transform: translateY(150px) scale(0.7) rotateX(20deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotateX(0deg);
+            }
+        }
+
+        /* Enhanced play button with effects */
+        .play-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 
+                0 8px 25px rgba(102, 126, 234, 0.6),
+                inset 0 -3px 15px rgba(0,0,0,0.3),
+                0 0 30px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .play-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 4s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .play-btn:hover {
+            transform: scale(1.2) rotate(10deg);
+            box-shadow: 
+                0 12px 35px rgba(102, 126, 234, 0.8),
+                inset 0 -3px 15px rgba(0,0,0,0.3),
+                0 0 50px rgba(102, 126, 234, 0.6);
+        }
+
+        .play-btn:active {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .play-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Music info with gradient text */
+        .music-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .music-title {
+            font-weight: 800;
+            font-size: 16px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .music-subtitle {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        /* Enhanced volume control */
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .volume-slider {
+            width: 100px;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(to right, #667eea, #764ba2, #f093fb);
+            border-radius: 10px;
+            outline: none;
+            position: relative;
+            box-shadow: 
+                0 2px 10px rgba(102, 126, 234, 0.4),
+                inset 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .volume-slider::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: 0;
+            right: 0;
+            bottom: -3px;
+            background: inherit;
+            border-radius: 10px;
+            filter: blur(8px);
+            opacity: 0.6;
+            z-index: -1;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            box-shadow: 
+                0 3px 15px rgba(102, 126, 234, 0.8),
+                inset 0 -2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.3);
+            box-shadow: 
+                0 5px 20px rgba(102, 126, 234, 1),
+                inset 0 -2px 5px rgba(0,0,0,0.2);
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            border: none;
+            box-shadow: 
+                0 3px 15px rgba(102, 126, 234, 0.8),
+                inset 0 -2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .volume-slider::-moz-range-thumb:hover {
+            transform: scale(1.3);
+            box-shadow: 
+                0 5px 20px rgba(102, 126, 234, 1),
+                inset 0 -2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .notebook {
+                padding: 60px 35px 40px 55px;
+                max-width: 95%;
+                min-height: 550px;
+            }
+
+            .title {
+                font-size: 30px;
+            }
+
+            .message {
+                font-size: 16px;
+                line-height: 31px;
+                max-height: 550px;
+            }
+
+            .music-player {
+                bottom: 25px;
+                right: 25px;
+                padding: 20px;
+                gap: 15px;
+            }
+
+            .play-btn {
+                width: 55px;
+                height: 55px;
+            }
+
+            .volume-control {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle canvas -->
+    <canvas id="particleCanvas"></canvas>
+
+    <div class="notebook">
+        <div class="spiral">
+            <div class="spiral-ring" style="--ring-index: 0"></div>
+            <div class="spiral-ring" style="--ring-index: 1"></div>
+            <div class="spiral-ring" style="--ring-index: 2"></div>
+            <div class="spiral-ring" style="--ring-index: 3"></div>
+            <div class="spiral-ring" style="--ring-index: 4"></div>
+            <div class="spiral-ring" style="--ring-index: 5"></div>
+            <div class="spiral-ring" style="--ring-index: 6"></div>
+            <div class="spiral-ring" style="--ring-index: 7"></div>
+        </div>
+
+        <h1 class="title">Happy Birthday My Sweetgirl Ianne 🎂</h1>
+        
+        <div class="message">
+            Hey Ianne,<br><br>
+            
+            I know things haven't been easy between us, and I know I messed up in ways that hurt you. But today, on your birthday, I just want you to know how much you still mean to me. I miss everything about us—the way you laugh at the stupidest things, how you always knew what I was thinking before I said it, the way we could talk for hours about nothing and everything. I miss the comfortable silences we shared, the inside jokes that no one else would understand, and the way you'd look at me when you thought I wasn't paying attention.<br><br>
+            
+            I've been thinking a lot lately about how heavy things must be for you right now, and I wish I could be there to help carry some of that weight. You've always been so strong, but you don't have to be strong alone. I remember when you told me your fears, your dreams, and all the little things that keep you up at night. I still care about all of it. I still care about you. Every single day, I find myself wanting to text you about the smallest things—a song that reminded me of you, something funny I saw, or just to ask how your day went. It's these little moments that I miss the most.<br><br>
+            
+            I'm not perfect, and I know I never will be. But what I do know is that losing you made me realize how much I took for granted. The way you made even ordinary days feel special. How you believed in me when I didn't believe in myself. The way you'd encourage me when I was down, celebrate with me when things went right, and stand by me through everything in between. I need you to know that I'm sorry for the times I let you down, for the moments I wasn't there when I should've been, for not appreciating you the way you deserved.<br><br>
+            
+            I think about all the plans we made together—the places we wanted to visit, the dreams we shared, the future we talked about building. I know I wasn't always the best version of myself, and there were times when I took your patience and love for granted. I see that now. I see how much you gave, how much you tried, and how much you cared even when I made it difficult. You deserved better than what I gave you, and that's something I have to live with every day.<br><br>
+            
+            But here's what I also know—I've learned from my mistakes. I've spent this time apart really thinking about what went wrong and what I could have done differently. I've worked on myself, not just to win you back, but to become the person you always believed I could be. The person who shows up, who listens, who doesn't let the small things slide. I want to be someone you can count on, someone who makes you feel safe and loved every single day.<br><br>
+            
+            I miss you. More than I can put into words. I miss your smile, your voice, the way you'd scrunch your nose when you were concentrating on something. I miss how you'd sing along to songs even when you didn't know all the words, how you'd steal my hoodies and claim they looked better on you (which they did). I miss the way you made me feel like I was home, no matter where we were. You have this incredible ability to make everything feel right, and without you, everything feels a little bit off.<br><br>
+            
+            And if there's even the smallest chance that we could try again, I promise I'll do better. I'll listen more, love harder, and never take a single moment with you for granted. You deserve someone who shows up for you every single day, and I want to be that person. I want to be the one who makes you laugh when you're sad, who holds you when things get tough, who celebrates every little victory with you. I want to build that future we talked about, but this time I'll be fully present for it.<br><br>
+            
+            I know trust isn't rebuilt overnight, and I know words are easy to say. But I'm willing to prove it through my actions, day after day, for as long as it takes. I'm willing to have the hard conversations, to work through the difficult moments, to be patient while you heal from the ways I hurt you. I understand if you need time, if you need space, or if you're not sure yet. I just needed you to know that I'm here, and I'm not going anywhere.<br><br>
+            
+            Whatever you're going through right now, whatever weight you're carrying, I hope you know you're not alone. I'm here, and I'll always be here if you need me. Even if you're not ready to let me back in, even if you never are, I want you to know that you can still count on me. Because caring about you doesn't stop just because we're apart. You'll always matter to me.<br><br>
+            
+            Today is your day, and you deserve all the happiness in the world. You deserve someone who sees your worth every single day, who never makes you question how much you're loved, who treats you like the incredible person you are. I want to be that person for you. I want another chance to love you the way you've always deserved—fully, completely, without hesitation.<br><br>
+            
+            Happy birthday, Ianne. I hope this year brings you everything beautiful that you deserve—all the joy, success, love, and peace you've been looking for. I hope you know how special you are, not just to me, but to everyone who's lucky enough to know you. You have this light in you that makes everything better, and I'm so grateful I got to experience it, even for the time that I did.<br><br>
+            
+            I'm still here. I'm still hoping. And I'm still believing in us.<br><br>
+        </div>
+    </div>
+
+    <div class="music-player">
+        <button class="play-btn" id="playBtn">
+            <svg id="playIcon" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+            </svg>
+            <svg id="pauseIcon" viewBox="0 0 24 24" style="display: none;">
+                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+            </svg>
+        </button>
+        <div class="music-info">
+            <div class="music-title">For You ♪</div>
+            <div class="music-subtitle">Playing for someone special</div>
+        </div>
+        <div class="volume-control">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,0.9)">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+            </svg>
+            <input type="range" min="0" max="100" value="70" class="volume-slider" id="volumeSlider">
+        </div>
+    </div>
+
+    <audio id="audioPlayer" loop autoplay>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Particle system with canvas
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + 20;
+                this.size = Math.random() * 3 + 1;
+                this.speedY = Math.random() * 1.5 + 0.5;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.opacity = 0;
+                this.fadeIn = true;
+                this.color = `rgba(${Math.random() > 0.5 ? '102, 126, 234' : '255, 107, 157'}, ${this.opacity})`;
+            }
+
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX;
+
+                if (this.fadeIn) {
+                    this.opacity += 0.02;
+                    if (this.opacity >= 0.7) this.fadeIn = false;
+                } else {
+                    this.opacity -= 0.005;
+                }
+
+                if (this.y < -20 || this.opacity <= 0) {
+                    this.reset();
+                }
+
+                this.color = `rgba(${this.x % 2 === 0 ? '102, 126, 234' : '255, 107, 157'}, ${this.opacity})`;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Add glow effect
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+            }
+        }
+
+        const particles = [];
+        for (let i = 0; i < 80; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        animateParticles();
+
+        // Create floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            const hearts = ['💗', '💖', '💕', '💓', '❤️'];
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.animationDuration = (12 + Math.random() * 12) + 's';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 30000);
+        }
+
+        // Create sparkles
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            sparkle.style.animationDelay = Math.random() * 3 + 's';
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => sparkle.remove(), 6000);
+        }
+
+        // Create hearts and sparkles periodically
+        setInterval(createHeart, 1500);
+        setInterval(createSparkle, 800);
+        
+        // Initial batch
+        for(let i = 0; i < 8; i++) {
+            setTimeout(createHeart, i * 300);
+            setTimeout(createSparkle, i * 200);
+        }
+
+        // Music player controls
+        const audio = document.getElementById('audioPlayer');
+        const playBtn = document.getElementById('playBtn');
+        const playIcon = document.getElementById('playIcon');
+        const pauseIcon = document.getElementById('pauseIcon');
+        const volumeSlider = document.getElementById('volumeSlider');
+
+        audio.volume = 0.7;
+
+        // Force autoplay with multiple attempts
+        function attemptAutoplay() {
+            audio.play().then(() => {
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+            }).catch(() => {
+                const startMusic = () => {
+                    audio.play();
+                    playIcon.style.display = 'none';
+                    pauseIcon.style.display = 'block';
+                    document.removeEventListener('click', startMusic);
+                    document.removeEventListener('touchstart', startMusic);
+                    document.removeEventListener('scroll', startMusic);
+                };
+                document.addEventListener('click', startMusic, { once: true });
+                document.addEventListener('touchstart', startMusic, { once: true });
+                document.addEventListener('scroll', startMusic, { once: true });
+            });
+        }
+
+        attemptAutoplay();
+        window.addEventListener('load', attemptAutoplay);
+        document.addEventListener('DOMContentLoaded', attemptAutoplay);
+
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+            } else {
+                audio.pause();
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+            }
+        });
+
+        volumeSlider.addEventListener('input', (e) => {
+            audio.volume = e.target.value / 100;
+        });
+
+        audio.addEventListener('play', () => {
+            playIcon.style.display = 'none';
+            pauseIcon.style.display = 'block';
+        });
+
+        audio.addEventListener('pause', () => {
+            playIcon.style.display = 'block';
+            pauseIcon.style.display = 'none';
+        });
+
+        // Resize canvas on window resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
